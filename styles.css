@@ -818,8 +818,30 @@ body.quiet_cards[data-scheme="bloom"] {
 
 .quiet_cards h1 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.95rem, 9vw, 3.25rem);
+  font-size: clamp(1.82rem, 8.2vw, 3.25rem);
   color: var(--title-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.28rem, 1.2vw, 0.58rem);
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.quiet_cards .title-dove {
+  display: block;
+  width: clamp(2rem, 9.5vw, 3.45rem);
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  background: currentColor;
+  opacity: 0.9;
+  transform: translateY(0.02em) rotate(-2deg);
+  -webkit-mask: url("images/dove-title.png") center / contain no-repeat;
+  mask: url("images/dove-title.png") center / contain no-repeat;
+}
+
+.quiet_cards .title-text {
+  white-space: nowrap;
 }
 
 .quiet_cards .view-toggle {

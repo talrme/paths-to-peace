@@ -49,7 +49,7 @@ Then open `http://localhost:8080`.
 
 ## Icons
 
-The browser tab icon and phone home-screen icons are generated from `images/dove.png`. `index.html` links `images/favicon-32.png` for tabs and `images/apple-touch-icon.png` for iOS, while `site.webmanifest` points Android/PWA installs to the 192px and 512px icon files.
+The browser tab icon and phone home-screen icons are generated from `images/dove.png`. `index.html` links `images/favicon-32.png` for tabs and `images/apple-touch-icon.png` for iOS, while `site.webmanifest` points Android/PWA installs to the 192px and 512px icon files. `images/dove-title.png` is a transparent title mark used inside the page heading.
 
 ## Content
 

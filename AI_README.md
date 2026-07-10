@@ -46,6 +46,7 @@ Current image assets:
 - `waterfalls.jpg`
 - `dove.png` source image for site icons
 - `favicon-32.png`, `apple-touch-icon.png`, `icon-192.png`, and `icon-512.png` generated from the dove image
+- `dove-title.png` transparent dove mark used in the `h1` title
 
 Current path content is edited directly in `app.js`. Keep favorites intentional; they define the default shuffle deck. Use `category: "other"` for ordinary non-favorites and `category: "energy"` for Energy Giving entries.
 

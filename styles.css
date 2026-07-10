@@ -338,9 +338,11 @@ h1 {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(0, 0, 0, 0.48);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background:
+    radial-gradient(circle at 50% 12%, var(--settings-backdrop-glow, rgba(247, 255, 249, 0.18)), transparent 34%),
+    rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   animation: fadeIn 180ms ease;
 }
 
@@ -351,7 +353,7 @@ h1 {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 0;
+  padding: 0 0.5rem max(0.5rem, env(safe-area-inset-bottom));
   pointer-events: none;
 }
 
@@ -363,16 +365,18 @@ h1 {
 .settings-panel {
   width: 100%;
   max-width: 500px;
-  max-height: min(84vh, 620px);
+  max-height: min(86svh, 650px);
   overflow: auto;
   color: var(--settings-text, #171717);
-  background: var(--settings-bg, #ffffff);
-  border: 1px solid var(--settings-border, rgba(0, 0, 0, 0.15));
-  border-bottom: 0;
-  border-radius: 8px 8px 0 0;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+  background:
+    linear-gradient(180deg, var(--settings-panel-top, rgba(255, 255, 255, 0.72)), transparent 9rem),
+    var(--settings-bg, #ffffff);
+  border: 1px solid var(--settings-panel-border, var(--settings-border, rgba(0, 0, 0, 0.15)));
+  border-radius: 8px;
+  box-shadow: var(--settings-panel-shadow, 0 22px 70px rgba(0, 0, 0, 0.3));
   pointer-events: auto;
-  animation: slideUp 200ms ease;
+  animation: slideUp 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  scrollbar-gutter: stable;
 }
 
 .settings-header {
@@ -383,34 +387,51 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem;
-  background: var(--settings-bg, #ffffff);
-  border-bottom: 1px solid var(--settings-border, rgba(0, 0, 0, 0.15));
+  padding: 1.35rem 1rem 0.9rem;
+  background:
+    linear-gradient(180deg, var(--settings-bg, #ffffff) 0%, var(--settings-header-bg, var(--settings-bg, #ffffff)) 100%);
+  border-bottom: 1px solid var(--settings-section-border, var(--settings-border, rgba(0, 0, 0, 0.15)));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.settings-header::before {
+  content: "";
+  position: absolute;
+  top: 0.48rem;
+  left: 50%;
+  width: 2.8rem;
+  height: 0.24rem;
+  border-radius: 999px;
+  background: var(--settings-grip, rgba(0, 0, 0, 0.16));
+  transform: translateX(-50%);
 }
 
 .settings-header h2 {
   margin-top: 0.25rem;
-  font-size: 1.45rem;
+  font-size: 1.38rem;
   line-height: 1;
 }
 
 .settings-close {
   width: 44px;
   height: 44px;
-  border: 1px solid var(--settings-border, currentColor);
+  border: 1px solid var(--settings-section-border, var(--settings-border, currentColor));
   border-radius: 50%;
-  background: var(--settings-close-bg, transparent);
+  background: var(--settings-control-bg, transparent);
   color: var(--settings-text, currentColor);
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: transform 240ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+  box-shadow: 0 8px 22px var(--settings-control-shadow, rgba(0, 0, 0, 0.06));
+  transition: transform 240ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .settings-close:hover {
   color: var(--settings-selected-text, #ffffff);
   background: var(--settings-selected, #171717);
   border-color: var(--settings-selected, #171717);
+  box-shadow: 0 12px 28px var(--settings-control-shadow, rgba(0, 0, 0, 0.12));
   transform: rotate(90deg) scale(1.05);
 }
 
@@ -442,21 +463,25 @@ h1 {
 }
 
 .settings-body {
-  padding: 1rem;
+  padding: 0.85rem 1rem 1rem;
   display: grid;
-  gap: 1rem;
+  gap: 0.72rem;
 }
 
 .settings-field {
-  border: 0;
+  min-width: 0;
+  border: 1px solid var(--settings-section-border, rgba(0, 0, 0, 0.15));
+  border-radius: 8px;
   margin: 0;
-  padding: 0;
+  padding: 0.72rem;
+  background: var(--settings-section-bg, transparent);
 }
 
 .settings-field legend {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.58rem;
+  padding: 0 0.25rem;
   color: var(--settings-muted, #555555);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 850;
   text-transform: uppercase;
 }
@@ -464,41 +489,68 @@ h1 {
 .settings-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--settings-section-border, rgba(0, 0, 0, 0.12));
+  border-radius: 8px;
+  background: var(--settings-segment-bg, rgba(0, 0, 0, 0.03));
 }
 
 .settings-options button {
-  min-height: 46px;
-  border: 1px solid var(--settings-border, rgba(0, 0, 0, 0.15));
-  border-radius: 8px;
-  background: var(--settings-option-bg, transparent);
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
   color: var(--settings-text, currentColor);
   cursor: pointer;
   font-weight: 800;
+  transition: background 170ms ease, color 170ms ease, transform 150ms ease, box-shadow 170ms ease;
+}
+
+.settings-options button:hover {
+  background: var(--settings-option-hover-bg, rgba(0, 0, 0, 0.05));
 }
 
 .settings-options button[aria-pressed="true"] {
   background: var(--settings-selected, #171717);
-  border-color: var(--settings-selected, #171717);
   color: var(--settings-selected-text, #ffffff);
+  box-shadow: 0 7px 18px var(--settings-control-shadow, rgba(0, 0, 0, 0.12));
+}
+
+.settings-options button:active,
+.palette-option:active {
+  transform: translateY(1px);
+}
+
+.settings-options button:focus-visible,
+.palette-option:focus-visible,
+.settings-reset button:focus-visible,
+.settings-close:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 2px;
 }
 
 .palette-details {
-  border: 1px solid var(--settings-border, rgba(0, 0, 0, 0.15));
+  border: 1px solid var(--settings-section-border, rgba(0, 0, 0, 0.15));
   border-radius: 8px;
-  background: var(--settings-option-bg, transparent);
+  background: var(--settings-section-bg, transparent);
   overflow: hidden;
 }
 
 .palette-details summary {
-  min-height: 54px;
-  padding: 0.75rem 1rem;
+  min-height: 56px;
+  padding: 0.82rem 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   cursor: pointer;
   list-style: none;
+  transition: background 170ms ease;
+}
+
+.palette-details summary:hover {
+  background: var(--settings-option-hover-bg, rgba(0, 0, 0, 0.05));
 }
 
 .palette-details summary::-webkit-details-marker {
@@ -508,7 +560,7 @@ h1 {
 .palette-summary-title {
   display: block;
   color: var(--settings-muted, #555555);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 850;
   text-transform: uppercase;
 }
@@ -537,14 +589,15 @@ h1 {
 .palette-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
-  padding: 0 1rem 1rem;
+  gap: 0.42rem;
+  padding: 0.72rem;
+  border-top: 1px solid var(--settings-section-border, rgba(0, 0, 0, 0.12));
 }
 
 .palette-option {
-  min-height: 44px;
-  border: 1px solid var(--settings-border, rgba(0, 0, 0, 0.15));
-  border-radius: 8px;
+  min-height: 42px;
+  border: 1px solid transparent;
+  border-radius: 6px;
   background: transparent;
   color: var(--settings-text, currentColor);
   cursor: pointer;
@@ -553,10 +606,16 @@ h1 {
   gap: 0.48rem;
   padding: 0.42rem 0.55rem;
   font-weight: 800;
+  transition: background 170ms ease, border-color 170ms ease, box-shadow 170ms ease, transform 150ms ease;
+}
+
+.palette-option:hover {
+  background: var(--settings-option-hover-bg, rgba(0, 0, 0, 0.05));
 }
 
 .palette-option[aria-pressed="true"] {
   border-color: var(--settings-selected, #171717);
+  background: var(--settings-selected-soft, rgba(0, 0, 0, 0.05));
   box-shadow: inset 0 0 0 1px var(--settings-selected, #171717);
 }
 
@@ -570,15 +629,15 @@ h1 {
 }
 
 .settings-reset {
-  padding-top: 0.2rem;
+  padding-top: 0.08rem;
 }
 
 .settings-reset button {
   width: 100%;
   min-height: 46px;
-  border: 1px solid var(--settings-border, rgba(0, 0, 0, 0.15));
+  border: 1px solid var(--settings-section-border, rgba(0, 0, 0, 0.15));
   border-radius: 8px;
-  background: var(--settings-option-bg, transparent);
+  background: var(--settings-control-bg, transparent);
   color: var(--settings-muted, currentColor);
   cursor: pointer;
   font-weight: 850;
@@ -658,7 +717,7 @@ html[data-motion="still"] *::after {
 
   .settings-panel {
     border-radius: 8px;
-    border-bottom: 1px solid var(--settings-border, rgba(0, 0, 0, 0.15));
+    border-bottom: 1px solid var(--settings-panel-border, var(--settings-border, rgba(0, 0, 0, 0.15)));
   }
 }
 
@@ -698,6 +757,19 @@ body.quiet_cards {
   --settings-selected: var(--active-bg);
   --settings-selected-text: var(--active-fg);
   --settings-button-bg: rgba(247, 255, 249, 0.88);
+  --settings-panel-top: rgba(255, 255, 255, 0.48);
+  --settings-panel-border: rgba(18, 56, 42, 0.18);
+  --settings-panel-shadow: 0 24px 72px rgba(11, 36, 26, 0.28);
+  --settings-header-bg: rgba(247, 255, 249, 0.88);
+  --settings-section-bg: rgba(255, 255, 255, 0.46);
+  --settings-section-border: rgba(18, 56, 42, 0.13);
+  --settings-segment-bg: rgba(18, 56, 42, 0.04);
+  --settings-option-hover-bg: rgba(18, 56, 42, 0.06);
+  --settings-selected-soft: rgba(18, 56, 42, 0.08);
+  --settings-control-bg: rgba(255, 255, 255, 0.52);
+  --settings-control-shadow: rgba(11, 36, 26, 0.12);
+  --settings-backdrop-glow: rgba(247, 255, 249, 0.18);
+  --settings-grip: rgba(18, 56, 42, 0.18);
   --settings-reset-hover-bg: rgba(18, 56, 42, 0.06);
   color: var(--text-color);
   background: var(--page-bg);
@@ -732,6 +804,17 @@ body.quiet_cards[data-scheme="tide"] {
   --next-hover-bg: rgba(248, 255, 254, 0.92);
   --next-border: rgba(15, 77, 88, 0.18);
   --settings-button-bg: rgba(248, 255, 254, 0.88);
+  --settings-panel-border: rgba(15, 77, 88, 0.18);
+  --settings-panel-shadow: 0 24px 72px rgba(11, 42, 49, 0.28);
+  --settings-header-bg: rgba(248, 255, 254, 0.9);
+  --settings-section-bg: rgba(255, 255, 255, 0.48);
+  --settings-section-border: rgba(15, 77, 88, 0.13);
+  --settings-segment-bg: rgba(15, 77, 88, 0.04);
+  --settings-option-hover-bg: rgba(15, 77, 88, 0.06);
+  --settings-selected-soft: rgba(15, 77, 88, 0.08);
+  --settings-control-shadow: rgba(11, 42, 49, 0.12);
+  --settings-grip: rgba(15, 77, 88, 0.18);
+  --settings-reset-hover-bg: rgba(15, 77, 88, 0.06);
 }
 
 body.quiet_cards[data-scheme="sunrise"] {
@@ -764,6 +847,18 @@ body.quiet_cards[data-scheme="sunrise"] {
   --next-border: rgba(91, 58, 34, 0.18);
   --settings-bg: #fffaf2;
   --settings-button-bg: rgba(255, 250, 242, 0.9);
+  --settings-panel-border: rgba(91, 58, 34, 0.18);
+  --settings-panel-shadow: 0 24px 72px rgba(70, 42, 22, 0.24);
+  --settings-header-bg: rgba(255, 250, 242, 0.92);
+  --settings-section-bg: rgba(255, 255, 255, 0.46);
+  --settings-section-border: rgba(91, 58, 34, 0.14);
+  --settings-segment-bg: rgba(91, 58, 34, 0.04);
+  --settings-option-hover-bg: rgba(91, 58, 34, 0.06);
+  --settings-selected-soft: rgba(91, 58, 34, 0.08);
+  --settings-control-shadow: rgba(70, 42, 22, 0.12);
+  --settings-backdrop-glow: rgba(255, 250, 242, 0.18);
+  --settings-grip: rgba(91, 58, 34, 0.2);
+  --settings-reset-hover-bg: rgba(91, 58, 34, 0.06);
 }
 
 body.quiet_cards[data-scheme="lantern"] {
@@ -796,6 +891,19 @@ body.quiet_cards[data-scheme="lantern"] {
   --next-border: rgba(247, 215, 150, 0.2);
   --settings-bg: #202723;
   --settings-button-bg: rgba(31, 36, 33, 0.86);
+  --settings-panel-top: rgba(247, 215, 150, 0.08);
+  --settings-panel-border: rgba(247, 215, 150, 0.28);
+  --settings-panel-shadow: 0 26px 80px rgba(0, 0, 0, 0.52);
+  --settings-header-bg: rgba(32, 39, 35, 0.92);
+  --settings-section-bg: rgba(247, 215, 150, 0.045);
+  --settings-section-border: rgba(247, 215, 150, 0.18);
+  --settings-segment-bg: rgba(0, 0, 0, 0.16);
+  --settings-option-hover-bg: rgba(247, 215, 150, 0.08);
+  --settings-selected-soft: rgba(247, 215, 150, 0.12);
+  --settings-control-bg: rgba(247, 215, 150, 0.055);
+  --settings-control-shadow: rgba(0, 0, 0, 0.26);
+  --settings-backdrop-glow: rgba(247, 215, 150, 0.12);
+  --settings-grip: rgba(247, 215, 150, 0.28);
   --settings-reset-hover-bg: rgba(247, 215, 150, 0.08);
 }
 
@@ -829,6 +937,18 @@ body.quiet_cards[data-scheme="bloom"] {
   --next-border: rgba(63, 49, 88, 0.18);
   --settings-bg: #fff8fb;
   --settings-button-bg: rgba(255, 248, 251, 0.9);
+  --settings-panel-border: rgba(63, 49, 88, 0.18);
+  --settings-panel-shadow: 0 24px 72px rgba(42, 32, 55, 0.24);
+  --settings-header-bg: rgba(255, 248, 251, 0.92);
+  --settings-section-bg: rgba(255, 255, 255, 0.5);
+  --settings-section-border: rgba(63, 49, 88, 0.13);
+  --settings-segment-bg: rgba(63, 49, 88, 0.04);
+  --settings-option-hover-bg: rgba(63, 49, 88, 0.06);
+  --settings-selected-soft: rgba(63, 49, 88, 0.08);
+  --settings-control-shadow: rgba(42, 32, 55, 0.11);
+  --settings-backdrop-glow: rgba(255, 248, 251, 0.2);
+  --settings-grip: rgba(63, 49, 88, 0.18);
+  --settings-reset-hover-bg: rgba(63, 49, 88, 0.06);
 }
 
 .quiet_cards .app {

@@ -105,6 +105,20 @@ const DEFAULT_SETTINGS = {
   accordionMode: "single",
   motion: "soft",
 };
+const SETTING_PARAMS = {
+  startView: "view",
+  colorScheme: "scheme",
+  shufflePool: "pool",
+  accordionMode: "accordions",
+  motion: "motion",
+};
+const SETTING_VALUES = {
+  startView: ["shuffle", "list"],
+  colorScheme: Object.keys(PALETTE_LABELS),
+  shufflePool: ["favorites", "all"],
+  accordionMode: ["single", "many"],
+  motion: ["soft", "still"],
+};
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const SHUFFLE_FADE_OUT_MS = 240;
 const SHUFFLE_FADE_IN_MS = 620;
@@ -133,15 +147,18 @@ const els = {
   settingsModal: document.querySelector("[data-settings-modal]"),
   settingsButtons: Array.from(document.querySelectorAll("[data-setting-key]")),
   paletteLabel: document.querySelector("[data-current-palette]"),
+  resetSettings: document.querySelector("[data-reset-settings]"),
+  resetHome: document.querySelector("[data-reset-home]"),
 };
 
 function loadSettings() {
+  let savedSettings = {};
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    return { ...DEFAULT_SETTINGS, ...saved };
+    savedSettings = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
   } catch (error) {
-    return { ...DEFAULT_SETTINGS };
+    savedSettings = {};
   }
+  return { ...DEFAULT_SETTINGS, ...savedSettings, ...readSettingsFromUrl() };
 }
 
 function saveSettings() {
@@ -149,6 +166,56 @@ function saveSettings() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.settings));
   } catch (error) {
     // Settings remain usable for the current page load if browser storage is unavailable.
+  }
+}
+
+function clearSavedSettings() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    // Settings can still reset for the current page load if browser storage is unavailable.
+  }
+}
+
+function readSettingsFromUrl() {
+  const urlSettings = {};
+  try {
+    const params = new URLSearchParams(window.location.search);
+    Object.entries(SETTING_PARAMS).forEach(([settingKey, paramKey]) => {
+      const value = params.get(paramKey);
+      if (value && SETTING_VALUES[settingKey].includes(value)) {
+        urlSettings[settingKey] = value;
+      }
+    });
+  } catch (error) {
+    return {};
+  }
+  return urlSettings;
+}
+
+function writeSettingsToUrl() {
+  try {
+    const url = new URL(window.location.href);
+    Object.entries(SETTING_PARAMS).forEach(([settingKey, paramKey]) => {
+      if (state.settings[settingKey] === DEFAULT_SETTINGS[settingKey]) {
+        url.searchParams.delete(paramKey);
+      } else {
+        url.searchParams.set(paramKey, state.settings[settingKey]);
+      }
+    });
+    window.history.replaceState({}, "", url);
+  } catch (error) {
+    // URL syncing is a convenience; settings still work without History support.
+  }
+}
+
+function clearUrlParameters() {
+  try {
+    const url = new URL(window.location.href);
+    url.search = "";
+    window.history.replaceState({}, "", url);
+  } catch (error) {
+    // Reset still works even when the URL cannot be rewritten.
   }
 }
 
@@ -289,6 +356,7 @@ function applySettings() {
 function setSetting(key, value) {
   state.settings[key] = value;
   saveSettings();
+  writeSettingsToUrl();
   applySettings();
   if (key === "startView") {
     setView(value);
@@ -297,6 +365,17 @@ function setSetting(key, value) {
     refreshDeck();
     renderCurrentPath({ animate: state.view === "shuffle" });
   }
+}
+
+function resetToDefaults() {
+  state.settings = { ...DEFAULT_SETTINGS };
+  clearSavedSettings();
+  clearUrlParameters();
+  applySettings();
+  refreshDeck();
+  renderCurrentPath({ animate: state.view === "shuffle" });
+  setView(DEFAULT_SETTINGS.startView);
+  renderList();
 }
 
 function openSettings() {
@@ -478,6 +557,14 @@ els.viewButtons.forEach((button) => {
 els.openSettings.addEventListener("click", openSettings);
 els.closeSettings.addEventListener("click", closeSettings);
 els.settingsBackdrop.addEventListener("click", closeSettings);
+els.resetSettings.addEventListener("click", resetToDefaults);
+els.resetHome.addEventListener("click", resetToDefaults);
+els.resetHome.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    resetToDefaults();
+  }
+});
 els.settingsButtons.forEach((button) => {
   button.addEventListener("click", () => {
     setSetting(button.dataset.settingKey, button.dataset.settingValue);
@@ -494,3 +581,4 @@ renderCurrentPath();
 renderList();
 applySettings();
 setView(state.settings.startView);
+writeSettingsToUrl();

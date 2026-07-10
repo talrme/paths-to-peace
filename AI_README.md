@@ -25,6 +25,9 @@ Context for humans and coding assistants continuing this project. The user-facin
   - `accordionMode`: `single` or `many`
   - `motion`: `soft` or `still`; `still` disables the shuffle and accordion transitions
 - Settings persist per browser/device in `localStorage` key `paths-to-peace-settings-v1`.
+- Non-default settings are mirrored in URL params: `view`, `scheme`, `pool`, `accordions`, and `motion`.
+- URL params override saved device settings on load.
+- Clicking the title or the Settings `Back to Default` button resets to defaults, clears saved settings, and removes URL params.
 
 ## Code style
 

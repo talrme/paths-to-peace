@@ -17,6 +17,8 @@ The promoted production direction is **Quiet Cards**: an immersive image-backed 
 - Uses soft accordion and shuffle transitions, with a still-motion option in Settings.
 - Includes a small settings modal for start view, color scheme, shuffle pool, accordion behavior, and motion.
 - Saves settings on the current computer or phone with browser `localStorage`.
+- Mirrors non-default settings in URL parameters for shareable views.
+- Includes reset controls in the title and Settings panel to return to defaults.
 
 ## Run Locally
 
@@ -54,3 +56,7 @@ The browser tab icon and phone home-screen icons are generated from `images/dove
 ## Content
 
 Path data lives in `app.js`. Set `favorite: true` for any path that should appear in the default shuffle, and use `category: "energy"` for paths that belong in the Energy Giving section.
+
+## Settings URLs
+
+Non-default settings appear as URL parameters: `view`, `scheme`, `pool`, `accordions`, and `motion`. URL values override saved device settings on load. Clicking the title or `Back to Default` clears saved settings and URL parameters.

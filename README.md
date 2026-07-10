@@ -41,9 +41,14 @@ Then open `http://localhost:8080`.
 | `index.html` | Production page shell |
 | `styles.css` | Quiet Cards layout, responsive styling, modal styling |
 | `app.js` | Path data, shuffle deck, list rendering, settings |
+| `site.webmanifest` | Saved-to-phone app metadata and icon references |
 | `images/` | Local image assets |
-| `README.md` | Human-facing overview and live-site placeholder |
+| `README.md` | Human-facing overview and live-site link |
 | `AI_README.md` | Context for coding assistants and future edits |
+
+## Icons
+
+The browser tab icon and phone home-screen icons are generated from `images/dove.png`. `index.html` links `images/favicon-32.png` for tabs and `images/apple-touch-icon.png` for iOS, while `site.webmanifest` points Android/PWA installs to the 192px and 512px icon files.
 
 ## Content
 

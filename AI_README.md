@@ -6,7 +6,7 @@ Context for humans and coding assistants continuing this project. The user-facin
 
 - Static no-build website: plain `index.html`, `styles.css`, and `app.js`.
 - Production direction: **Quiet Cards**, promoted from the original `staging_1_quiet_cards` prototype.
-- Live site placeholder is in `README.md`; update it after a production URL exists.
+- Live site is listed in `README.md`.
 - Product idea: a phone-first collection of meditative "paths to peace" with a favorite shuffle view and an accordion list view.
 
 ## Behavior contract
@@ -42,11 +42,12 @@ Current image assets:
 - `meditation.jpg`
 - `rocks.jpg`
 - `waterfalls.jpg`
+- `dove.png` source image for site icons
+- `favicon-32.png`, `apple-touch-icon.png`, `icon-192.png`, and `icon-512.png` generated from the dove image
 
 Current path content is edited directly in `app.js`. Keep favorites intentional; they define the default shuffle deck. Use `category: "other"` for ordinary non-favorites and `category: "energy"` for Energy Giving entries.
 
 ## Future edits
 
 - Update `README.md` and this file together when user-visible behavior changes.
-- If publishing to GitHub Pages, update the `Live site` placeholder in `README.md`.
 - If adding more visual directions later, create new staging folders again rather than changing production in place without a comparison path.

@@ -16,12 +16,14 @@ Context for humans and coding assistants continuing this project. The user-facin
 - The `Next` button walks through a shuffled favorite deck and reshuffles after the last favorite.
 - `List` renders grouped sections: `Favorites`, `Other`, and `Energy Giving`.
 - Accordion rows include title, description, and image.
+- Accordions use JS-assisted height transitions so both opening and closing animate smoothly.
+- Shuffle advances use a preloaded fade/soft-focus transition.
 - Settings modal includes:
   - `startView`: `shuffle` or `list`
   - `colorScheme`: `fern`, `tide`, `sunrise`, `lantern`, or `bloom`
   - `shufflePool`: `favorites` or `all`
   - `accordionMode`: `single` or `many`
-  - `motion`: `soft` or `still`
+  - `motion`: `soft` or `still`; `still` disables the shuffle and accordion transitions
 - Settings persist per browser/device in `localStorage` key `paths-to-peace-settings-v1`.
 
 ## Code style

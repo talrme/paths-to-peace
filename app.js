@@ -186,16 +186,22 @@ const DEFAULT_SETTINGS = {
   accordionMode: "single",
   motion: "soft",
 };
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+const SHUFFLE_FADE_OUT_MS = 240;
+const SHUFFLE_FADE_IN_MS = 620;
+const ACCORDION_TRANSITION_MS = 460;
 
 const state = {
   deck: [],
   deckIndex: 0,
   view: "shuffle",
   settings: loadSettings(),
+  shuffleTransitionToken: 0,
 };
 
 const els = {
   views: Array.from(document.querySelectorAll("[data-view]")),
+  shuffleView: document.querySelector("[data-view='shuffle']"),
   viewButtons: Array.from(document.querySelectorAll("[data-view-button]")),
   currentImage: document.querySelector("[data-current-image]"),
   currentTitle: document.querySelector("[data-current-title]"),
@@ -255,12 +261,71 @@ function currentPath() {
   return state.deck[state.deckIndex];
 }
 
-function renderCurrentPath() {
-  const path = currentPath();
-  els.currentImage.src = `images/${path.image}`;
+function shouldAnimate() {
+  return state.settings.motion !== "still" &&
+    !(window.matchMedia && window.matchMedia(REDUCED_MOTION_QUERY).matches);
+}
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
+function preloadImage(src) {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.src = src;
+    if (image.decode) {
+      image.decode().then(resolve).catch(resolve);
+      return;
+    }
+    image.onload = resolve;
+    image.onerror = resolve;
+  });
+}
+
+function setCurrentPathContent(path, imageSrc = `images/${path.image}`) {
+  els.currentImage.src = imageSrc;
   els.currentImage.alt = path.alt;
   els.currentTitle.textContent = path.title;
   els.currentDescription.textContent = path.description;
+}
+
+async function renderCurrentPath({ animate = false } = {}) {
+  const path = currentPath();
+  const imageSrc = `images/${path.image}`;
+
+  if (!animate || !shouldAnimate()) {
+    state.shuffleTransitionToken += 1;
+    els.shuffleView.classList.remove("is-fading-out", "is-fading-in");
+    els.nextButton.disabled = false;
+    setCurrentPathContent(path, imageSrc);
+    return;
+  }
+
+  const token = state.shuffleTransitionToken + 1;
+  state.shuffleTransitionToken = token;
+  els.nextButton.disabled = true;
+  els.shuffleView.classList.remove("is-fading-in");
+  els.shuffleView.classList.add("is-fading-out");
+
+  await Promise.all([wait(SHUFFLE_FADE_OUT_MS), preloadImage(imageSrc)]);
+  if (token !== state.shuffleTransitionToken) {
+    return;
+  }
+
+  setCurrentPathContent(path, imageSrc);
+  els.shuffleView.classList.remove("is-fading-out");
+  els.shuffleView.classList.add("is-fading-in");
+
+  await wait(SHUFFLE_FADE_IN_MS);
+  if (token !== state.shuffleTransitionToken) {
+    return;
+  }
+
+  els.shuffleView.classList.remove("is-fading-in");
+  els.nextButton.disabled = false;
 }
 
 function showNextPath() {
@@ -268,7 +333,7 @@ function showNextPath() {
   if (state.deckIndex >= state.deck.length) {
     refreshDeck();
   }
-  renderCurrentPath();
+  renderCurrentPath({ animate: true });
 }
 
 function setView(view) {
@@ -311,7 +376,7 @@ function setSetting(key, value) {
   }
   if (key === "shufflePool") {
     refreshDeck();
-    renderCurrentPath();
+    renderCurrentPath({ animate: state.view === "shuffle" });
   }
 }
 
@@ -329,10 +394,112 @@ function closeSettings() {
   els.openSettings.focus();
 }
 
+function clearAccordionStyles(body) {
+  body.style.height = "";
+  body.style.opacity = "";
+  body.style.transform = "";
+}
+
+function waitForTransition(element, propertyName, fallbackMs, callback) {
+  let isSettled = false;
+  const done = (event) => {
+    if (isSettled) {
+      return;
+    }
+    if (event && event.target !== element) {
+      return;
+    }
+    if (event && propertyName && event.propertyName !== propertyName) {
+      return;
+    }
+    isSettled = true;
+    window.clearTimeout(timer);
+    element.removeEventListener("transitionend", done);
+    callback();
+  };
+  const timer = window.setTimeout(done, fallbackMs);
+  element.addEventListener("transitionend", done);
+}
+
+function openPathItem(details) {
+  if (details.open || details.dataset.animating === "true") {
+    return;
+  }
+  const body = details.querySelector(".path-body");
+  if (!body || !shouldAnimate()) {
+    details.open = true;
+    return;
+  }
+
+  details.dataset.animating = "true";
+  details.open = true;
+  body.style.height = "0px";
+  body.style.opacity = "0";
+  body.style.transform = "translateY(-0.35rem)";
+
+  window.requestAnimationFrame(() => {
+    body.style.height = `${body.scrollHeight}px`;
+    body.style.opacity = "1";
+    body.style.transform = "translateY(0)";
+  });
+
+  waitForTransition(body, "height", ACCORDION_TRANSITION_MS + 120, () => {
+    clearAccordionStyles(body);
+    delete details.dataset.animating;
+  });
+}
+
+function closePathItem(details) {
+  if (!details.open || details.dataset.animating === "true") {
+    return;
+  }
+  const body = details.querySelector(".path-body");
+  if (!body || !shouldAnimate()) {
+    details.open = false;
+    return;
+  }
+
+  details.dataset.animating = "true";
+  details.classList.add("is-closing");
+  body.style.height = `${body.scrollHeight}px`;
+  body.style.opacity = "1";
+  body.style.transform = "translateY(0)";
+
+  window.requestAnimationFrame(() => {
+    body.style.height = "0px";
+    body.style.opacity = "0";
+    body.style.transform = "translateY(-0.3rem)";
+  });
+
+  waitForTransition(body, "height", ACCORDION_TRANSITION_MS + 120, () => {
+    details.open = false;
+    details.classList.remove("is-closing");
+    clearAccordionStyles(body);
+    delete details.dataset.animating;
+  });
+}
+
+function togglePathItem(details) {
+  if (details.dataset.animating === "true") {
+    return;
+  }
+  if (details.open) {
+    closePathItem(details);
+    return;
+  }
+  if (state.settings.accordionMode === "single") {
+    document.querySelectorAll(".path-item[open]").forEach((item) => {
+      if (item !== details) {
+        closePathItem(item);
+      }
+    });
+  }
+  openPathItem(details);
+}
+
 function createPathItem(path, index) {
   const details = document.createElement("details");
   details.className = path.favorite ? "path-item is-favorite" : "path-item";
-  details.name = "paths-to-peace";
   if (index === 0) {
     details.open = true;
   }
@@ -342,6 +509,10 @@ function createPathItem(path, index) {
   title.className = "summary-title";
   title.textContent = path.title;
   summary.append(title);
+  summary.addEventListener("click", (event) => {
+    event.preventDefault();
+    togglePathItem(details);
+  });
 
   const body = document.createElement("div");
   body.className = "path-body";
@@ -353,16 +524,6 @@ function createPathItem(path, index) {
   body.append(image, copy);
 
   details.append(summary, body);
-  details.addEventListener("toggle", () => {
-    if (!details.open || state.settings.accordionMode !== "single") {
-      return;
-    }
-    document.querySelectorAll(".path-item[open]").forEach((item) => {
-      if (item !== details) {
-        item.removeAttribute("open");
-      }
-    });
-  });
 
   return details;
 }

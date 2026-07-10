@@ -14,6 +14,7 @@ The promoted production direction is **Quiet Cards**: an immersive image-backed 
 - Can shuffle favorites only or all paths from Settings.
 - Includes a `List` view grouped into favorites, other paths, and energy-giving paths.
 - Uses accordion rows with one-open or many-open behavior from Settings.
+- Uses soft accordion and shuffle transitions, with a still-motion option in Settings.
 - Includes a small settings modal for start view, color scheme, shuffle pool, accordion behavior, and motion.
 - Saves settings on the current computer or phone with browser `localStorage`.
 

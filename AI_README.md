@@ -1,0 +1,52 @@
+# AI_README - Paths to Peace
+
+Context for humans and coding assistants continuing this project. The user-facing overview is in `README.md`.
+
+## What this is
+
+- Static no-build website: plain `index.html`, `styles.css`, and `app.js`.
+- Production direction: **Quiet Cards**, promoted from the original `staging_1_quiet_cards` prototype.
+- Live site placeholder is in `README.md`; update it after a production URL exists.
+- Product idea: a phone-first collection of meditative "paths to peace" with a favorite shuffle view and an accordion list view.
+
+## Behavior contract
+
+- Default view is `Shuffle`.
+- Shuffle includes only paths where `favorite: true` unless Settings -> Shuffle pool is set to `all`.
+- The `Next` button walks through a shuffled favorite deck and reshuffles after the last favorite.
+- `List` renders grouped sections: `Favorites`, `Other`, and `Energy Giving`.
+- Accordion rows include title, description, and image.
+- Settings modal includes:
+  - `startView`: `shuffle` or `list`
+  - `colorScheme`: `fern`, `tide`, `sunrise`, `lantern`, or `bloom`
+  - `shufflePool`: `favorites` or `all`
+  - `accordionMode`: `single` or `many`
+  - `motion`: `soft` or `still`
+- Settings persist per browser/device in `localStorage` key `paths-to-peace-settings-v1`.
+
+## Code style
+
+- Use vanilla JavaScript. No npm, bundler, external CDN, or framework unless the user asks for one.
+- Keep the project static and directly openable in a browser.
+- Keep data in `app.js` unless the content grows enough to justify a separate JSON file.
+- Match the local Websites for Fun style: root docs, static files, mobile-first layout, settings modal, click-outside close, Escape close, and an X close button that rotates on hover.
+- Avoid adding extra instructions inside the UI. Controls should be self-explanatory.
+
+## Content notes
+
+Current image assets:
+
+- `mountains.webp`
+- `waterfalls-and-northern-lights.jpeg`
+- `ocean.avif`
+- `meditation.jpg`
+- `rocks.jpg`
+- `waterfalls.jpg`
+
+Current path content is edited directly in `app.js`. Keep favorites intentional; they define the default shuffle deck. Use `category: "other"` for ordinary non-favorites and `category: "energy"` for Energy Giving entries.
+
+## Future edits
+
+- Update `README.md` and this file together when user-visible behavior changes.
+- If publishing to GitHub Pages, update the `Live site` placeholder in `README.md`.
+- If adding more visual directions later, create new staging folders again rather than changing production in place without a comparison path.

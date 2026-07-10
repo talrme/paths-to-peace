@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paths to Peace</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="quiet_cards">
+    <main class="app" data-concept="quiet_cards">
+      <header class="mast">
+        <h1>Paths to Peace</h1>
+      </header>
+
+      <section class="view shuffle-view" data-view="shuffle" aria-live="polite">
+        <div class="image-wrap">
+          <img data-current-image src="" alt="">
+        </div>
+        <article class="copy-wrap">
+          <h2 data-current-title></h2>
+          <p class="path-description" data-current-description></p>
+          <div class="deck-actions">
+            <button type="button" class="next-button" data-next-path aria-label="Next path" title="Next path">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section class="view list-view" data-view="list" hidden>
+        <div class="path-list" data-path-list></div>
+      </section>
+
+      <nav class="bottom-controls" aria-label="Site controls">
+        <div class="view-toggle" aria-label="Choose view">
+          <button type="button" class="view-button is-active" data-view-button="shuffle" aria-label="Shuffle view" title="Shuffle view">
+            <svg class="control-svg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h2.4c1.6 0 3 .8 3.8 2.2l3.6 5.9c.8 1.3 2.2 2.1 3.8 2.1H20"></path>
+              <path d="M17 14.2l3 3-3 3"></path>
+              <path d="M4 17.2h2.4c1.6 0 3-.8 3.8-2.1"></path>
+              <path d="M13.8 8.9c.8-1.2 2.2-1.9 3.7-1.9H20"></path>
+              <path d="M17 4l3 3-3 3"></path>
+            </svg>
+          </button>
+          <button type="button" class="view-button" data-view-button="list" aria-label="List view" title="List view">
+            <svg class="control-svg" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="5" cy="7" r="1.35"></circle>
+              <circle cx="5" cy="12" r="1.35"></circle>
+              <circle cx="5" cy="17" r="1.35"></circle>
+              <path d="M9 7h10"></path>
+              <path d="M9 12h10"></path>
+              <path d="M9 17h10"></path>
+            </svg>
+          </button>
+        </div>
+        <span class="control-divider" aria-hidden="true"></span>
+        <button type="button" class="settings-button" data-open-settings aria-label="Settings" title="Settings">
+          <span class="settings-glyph" aria-hidden="true"></span>
+        </button>
+      </nav>
+    </main>
+
+    <div class="modal-backdrop" data-settings-backdrop hidden></div>
+    <section class="settings-modal" data-settings-modal hidden role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="settings-panel">
+        <header class="settings-header">
+          <div>
+            <p class="path-meta">Settings</p>
+            <h2 id="settings-title">Paths to Peace</h2>
+          </div>
+          <button type="button" class="settings-close" data-close-settings aria-label="Close settings">
+            <span aria-hidden="true"></span>
+          </button>
+        </header>
+        <div class="settings-body">
+          <fieldset class="settings-field">
+            <legend>Start view</legend>
+            <div class="settings-options">
+              <button type="button" data-setting-key="startView" data-setting-value="shuffle">Shuffle</button>
+              <button type="button" data-setting-key="startView" data-setting-value="list">List</button>
+            </div>
+          </fieldset>
+          <details class="palette-details">
+            <summary>
+              <span>
+                <span class="palette-summary-title">Color scheme</span>
+                <span class="palette-current" data-current-palette>Fern</span>
+              </span>
+              <span class="palette-chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="palette-options">
+              <button type="button" class="palette-option" data-setting-key="colorScheme" data-setting-value="fern">
+                <span class="palette-preview" style="--swatch-1: #12382a; --swatch-2: #d55337; --swatch-3: #dcece4;"></span>
+                <span>Fern</span>
+              </button>
+              <button type="button" class="palette-option" data-setting-key="colorScheme" data-setting-value="tide">
+                <span class="palette-preview" style="--swatch-1: #0f4d58; --swatch-2: #d7654b; --swatch-3: #d9eef0;"></span>
+                <span>Tide</span>
+              </button>
+              <button type="button" class="palette-option" data-setting-key="colorScheme" data-setting-value="sunrise">
+                <span class="palette-preview" style="--swatch-1: #5b3a22; --swatch-2: #d86f45; --swatch-3: #f5e8d6;"></span>
+                <span>Sunrise</span>
+              </button>
+              <button type="button" class="palette-option" data-setting-key="colorScheme" data-setting-value="lantern">
+                <span class="palette-preview" style="--swatch-1: #171b1a; --swatch-2: #f0b95a; --swatch-3: #263532;"></span>
+                <span>Lantern</span>
+              </button>
+              <button type="button" class="palette-option" data-setting-key="colorScheme" data-setting-value="bloom">
+                <span class="palette-preview" style="--swatch-1: #3f3158; --swatch-2: #c84f79; --swatch-3: #eadff0;"></span>
+                <span>Bloom</span>
+              </button>
+            </div>
+          </details>
+          <fieldset class="settings-field">
+            <legend>Shuffle pool</legend>
+            <div class="settings-options">
+              <button type="button" data-setting-key="shufflePool" data-setting-value="favorites">Favorites</button>
+              <button type="button" data-setting-key="shufflePool" data-setting-value="all">All</button>
+            </div>
+          </fieldset>
+          <fieldset class="settings-field">
+            <legend>Accordions</legend>
+            <div class="settings-options">
+              <button type="button" data-setting-key="accordionMode" data-setting-value="single">One open</button>
+              <button type="button" data-setting-key="accordionMode" data-setting-value="many">Many open</button>
+            </div>
+          </fieldset>
+          <fieldset class="settings-field">
+            <legend>Motion</legend>
+            <div class="settings-options">
+              <button type="button" data-setting-key="motion" data-setting-value="soft">Soft</button>
+              <button type="button" data-setting-key="motion" data-setting-value="still">Still</button>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>

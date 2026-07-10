@@ -1,6 +1,6 @@
 # Paths to Peace
 
-**Live site:** _TBD - add the production URL here after publishing._
+**Live site:** https://talrme.github.io/paths-to-peace
 
 A mobile-first static site for tiny meditative practices, collected as paths back toward peace.
 

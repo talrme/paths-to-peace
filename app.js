@@ -45,103 +45,22 @@ const PATHS = [
     "description": "Practice somatic awareness while being with other people. Notice something alive in your body, then listen as someone else shares. If they name a part of their body or a felt sense, gently feel into that same place in your own body while staying present with them."
   },
   {
-    "title": "Look for Moving Water",
-    "duration": "3 min",
-    "favorite": false,
-    "category": "other",
-    "image": "waterfalls.jpg",
-    "alt": "A bright waterfall flowing through green rock",
-    "description": "Watch water move in any form: a video, a sink, rain, the ocean. Let your eyes follow one current until your shoulders remember gravity."
-  },
-  {
-    "title": "Walk Without a Destination",
-    "duration": "10 min",
-    "favorite": false,
-    "category": "other",
-    "image": "mountains.webp",
-    "alt": "Mountains rising into a soft sky",
-    "description": "Step outside and walk without solving anything. Turn when your body wants to turn. Notice one color, one sound, and one place where the air changes."
-  },
-  {
-    "title": "Stone in Hand",
-    "duration": "2 min",
-    "favorite": false,
-    "category": "other",
-    "image": "rocks.jpg",
-    "alt": "Smooth stones stacked beside water",
-    "description": "Hold a stone, mug, ring, or key. Feel its temperature and edges. Give your attention to weight instead of worry for one quiet minute."
-  },
-  {
-    "title": "Open the Window",
-    "duration": "4 min",
-    "favorite": false,
-    "category": "other",
-    "image": "ocean.avif",
-    "alt": "Ocean water with soft light",
-    "description": "Open a window or stand near one. Let the room trade air with the world. Name what is different after the first full breath."
-  },
-  {
-    "title": "Tea Without Multitasking",
-    "duration": "7 min",
-    "favorite": false,
-    "category": "other",
-    "image": "waterfalls-and-northern-lights.jpeg",
-    "alt": "Waterfalls under northern lights",
-    "description": "Make tea, coffee, or water as if the whole ceremony matters. Stay with the cup until the first three sips are finished."
-  },
-  {
-    "title": "Name Five Colors",
+    "title": "Name Five Things",
     "duration": "2 min",
     "favorite": false,
     "category": "other",
     "image": "mountains.webp",
     "alt": "Layered mountains and sky",
-    "description": "Find five colors in the room. Give each one a precise name: not blue, but denim blue; not green, but basil green."
+    "description": "Name five things you can notice right now. They can be things you see, feel, hear, or smell. Let each one be simple and specific, just enough to bring you back into the room and into your body."
   },
   {
-    "title": "One Honest Sentence",
-    "duration": "3 min",
-    "favorite": false,
-    "category": "other",
-    "image": "meditation.jpg",
-    "alt": "Meditation art on a simple background",
-    "description": "Write one sentence that is true right now. It can be tiny. It can contradict yesterday. Let it stand without fixing it."
-  },
-  {
-    "title": "Listen to One Song",
-    "duration": "5 min",
-    "favorite": false,
-    "category": "other",
-    "image": "waterfalls.jpg",
-    "alt": "Water spilling over stones",
-    "description": "Choose one song and do nothing else until it ends. Let the first sound and the last sound have their own space."
-  },
-  {
-    "title": "Sky Check",
-    "duration": "2 min",
-    "favorite": false,
-    "category": "other",
-    "image": "waterfalls-and-northern-lights.jpeg",
-    "alt": "A luminous night sky over falling water",
-    "description": "Look at the sky for two minutes. If you cannot see it, imagine the weather above the ceiling continuing without your supervision."
-  },
-  {
-    "title": "Tidy One Surface",
-    "duration": "6 min",
-    "favorite": false,
-    "category": "other",
-    "image": "rocks.jpg",
-    "alt": "Balanced stones in a quiet scene",
-    "description": "Clear one small surface: a desk corner, a sink edge, one square foot of floor. Stop when that surface can breathe."
-  },
-  {
-    "title": "Hand on Heart",
-    "duration": "1 min",
+    "title": "Shape and Color of Two Feelings",
+    "duration": "4 min",
     "favorite": false,
     "category": "other",
     "image": "ocean.avif",
-    "alt": "A peaceful ocean surface",
-    "description": "Put one hand on your chest and one hand on your belly. Let your hands be proof that you are here, even before anything is resolved."
+    "alt": "Ocean water with soft light",
+    "description": "Think of two feelings that are present right now. For each one, notice if it has a shape and a color. Once both are identified, sit with them for a bit, feeling and seeing both at the same time without needing either one to disappear."
   },
   {
     "title": "Get Lost in a Project",

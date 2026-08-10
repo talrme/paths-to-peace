@@ -14,6 +14,7 @@ Context for humans and coding assistants continuing this project. The user-facin
 - Default view is `Shuffle`.
 - Shuffle includes only paths where `favorite: true` unless Settings -> Shuffle pool is set to `all`.
 - The `Next` button walks through a shuffled favorite deck and reshuffles after the last favorite.
+- The shuffle view supports right and left arrow keys, horizontal touch swipes, and a subtle previous icon.
 - `List` renders grouped sections: `Favorites`, `Other`, and `Energy Giving`.
 - Accordion rows include title, description, and image.
 - Accordions use JS-assisted height transitions so both opening and closing animate smoothly.

@@ -123,6 +123,8 @@ const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const SHUFFLE_FADE_OUT_MS = 240;
 const SHUFFLE_FADE_IN_MS = 620;
 const ACCORDION_TRANSITION_MS = 460;
+const SWIPE_MIN_DISTANCE = 46;
+const SWIPE_MAX_VERTICAL_RATIO = 0.85;
 
 const state = {
   deck: [],
@@ -130,6 +132,8 @@ const state = {
   view: "shuffle",
   settings: loadSettings(),
   shuffleTransitionToken: 0,
+  touchStartX: null,
+  touchStartY: null,
 };
 
 const els = {
@@ -139,6 +143,7 @@ const els = {
   currentImage: document.querySelector("[data-current-image]"),
   currentTitle: document.querySelector("[data-current-title]"),
   currentDescription: document.querySelector("[data-current-description]"),
+  prevButton: document.querySelector("[data-prev-path]"),
   nextButton: document.querySelector("[data-next-path]"),
   pathList: document.querySelector("[data-path-list]"),
   openSettings: document.querySelector("[data-open-settings]"),
@@ -278,6 +283,11 @@ function setCurrentPathContent(path, imageSrc = `images/${path.image}`) {
   els.currentDescription.textContent = path.description;
 }
 
+function updateDeckControls({ isAnimating = false } = {}) {
+  els.prevButton.disabled = isAnimating || state.deckIndex <= 0;
+  els.nextButton.disabled = isAnimating;
+}
+
 async function renderCurrentPath({ animate = false } = {}) {
   const path = currentPath();
   const imageSrc = `images/${path.image}`;
@@ -285,14 +295,14 @@ async function renderCurrentPath({ animate = false } = {}) {
   if (!animate || !shouldAnimate()) {
     state.shuffleTransitionToken += 1;
     els.shuffleView.classList.remove("is-fading-out", "is-fading-in");
-    els.nextButton.disabled = false;
     setCurrentPathContent(path, imageSrc);
+    updateDeckControls();
     return;
   }
 
   const token = state.shuffleTransitionToken + 1;
   state.shuffleTransitionToken = token;
-  els.nextButton.disabled = true;
+  updateDeckControls({ isAnimating: true });
   els.shuffleView.classList.remove("is-fading-in");
   els.shuffleView.classList.add("is-fading-out");
 
@@ -311,15 +321,67 @@ async function renderCurrentPath({ animate = false } = {}) {
   }
 
   els.shuffleView.classList.remove("is-fading-in");
-  els.nextButton.disabled = false;
+  updateDeckControls();
 }
 
 function showNextPath() {
+  if (els.nextButton.disabled) {
+    return;
+  }
   state.deckIndex += 1;
   if (state.deckIndex >= state.deck.length) {
     refreshDeck();
   }
   renderCurrentPath({ animate: true });
+}
+
+function showPreviousPath() {
+  if (els.prevButton.disabled || state.deckIndex <= 0) {
+    return;
+  }
+  state.deckIndex -= 1;
+  renderCurrentPath({ animate: true });
+}
+
+function handleShuffleKeydown(event) {
+  if (state.view !== "shuffle" || !els.settingsModal.hidden) {
+    return;
+  }
+  if (event.key === "ArrowRight") {
+    event.preventDefault();
+    showNextPath();
+  }
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    showPreviousPath();
+  }
+}
+
+function handleTouchStart(event) {
+  if (state.view !== "shuffle" || !event.touches.length) {
+    return;
+  }
+  state.touchStartX = event.touches[0].clientX;
+  state.touchStartY = event.touches[0].clientY;
+}
+
+function handleTouchEnd(event) {
+  if (state.view !== "shuffle" || state.touchStartX === null || state.touchStartY === null || !event.changedTouches.length) {
+    return;
+  }
+  const deltaX = event.changedTouches[0].clientX - state.touchStartX;
+  const deltaY = event.changedTouches[0].clientY - state.touchStartY;
+  state.touchStartX = null;
+  state.touchStartY = null;
+
+  if (Math.abs(deltaX) < SWIPE_MIN_DISTANCE || Math.abs(deltaY) > Math.abs(deltaX) * SWIPE_MAX_VERTICAL_RATIO) {
+    return;
+  }
+  if (deltaX < 0) {
+    showNextPath();
+  } else {
+    showPreviousPath();
+  }
 }
 
 function setView(view) {
@@ -550,7 +612,10 @@ function renderList() {
   els.pathList.replaceChildren(fragment);
 }
 
+els.prevButton.addEventListener("click", showPreviousPath);
 els.nextButton.addEventListener("click", showNextPath);
+els.shuffleView.addEventListener("touchstart", handleTouchStart, { passive: true });
+els.shuffleView.addEventListener("touchend", handleTouchEnd, { passive: true });
 els.viewButtons.forEach((button) => {
   button.addEventListener("click", () => setView(button.dataset.viewButton));
 });
@@ -574,6 +639,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !els.settingsModal.hidden) {
     closeSettings();
   }
+  handleShuffleKeydown(event);
 });
 
 refreshDeck();

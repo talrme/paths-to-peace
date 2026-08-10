@@ -11,6 +11,7 @@ The promoted production direction is **Quiet Cards**: an immersive image-backed 
 - Opens to a shuffled deck of favorite paths.
 - Shows one favorite path at a time with title, description, and image.
 - Advances through favorites with the next icon, then reshuffles after the last favorite.
+- Supports right and left arrow keys, horizontal phone swipes, and a subtle previous icon in the shuffle view.
 - Can shuffle favorites only or all paths from Settings.
 - Includes a `List` view grouped into favorites, other paths, and energy-giving paths.
 - Uses accordion rows with one-open or many-open behavior from Settings.

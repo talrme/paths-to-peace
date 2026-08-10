@@ -130,6 +130,7 @@ h1 {
 }
 
 .view-button,
+.prev-button,
 .next-button {
   border: 0;
   cursor: pointer;
@@ -137,10 +138,12 @@ h1 {
 }
 
 .view-button:active,
+.prev-button:active,
 .next-button:active {
   transform: translateY(1px);
 }
 
+.prev-button:disabled,
 .next-button:disabled {
   cursor: default;
   opacity: 0.62;
@@ -225,12 +228,13 @@ h1 {
 
 .deck-actions {
   position: absolute;
+  left: 1.05rem;
   right: 1.05rem;
   bottom: 1.05rem;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .path-list {
@@ -525,6 +529,8 @@ h1 {
 .settings-options button:focus-visible,
 .palette-option:focus-visible,
 .settings-reset button:focus-visible,
+.prev-button:focus-visible,
+.next-button:focus-visible,
 .settings-close:focus-visible {
   outline: 2px solid var(--accent-soft);
   outline-offset: 2px;
@@ -1098,6 +1104,7 @@ body.quiet_cards[data-scheme="bloom"] {
   color: var(--control-color);
 }
 
+.quiet_cards .prev-button,
 .quiet_cards .next-button {
   width: 44px;
   height: 44px;
@@ -1111,18 +1118,43 @@ body.quiet_cards[data-scheme="bloom"] {
   place-items: center;
 }
 
+.quiet_cards .prev-button {
+  background: transparent;
+  opacity: 0.52;
+}
+
+.quiet_cards .prev-button:disabled {
+  opacity: 0.24;
+}
+
+.quiet_cards .prev-button:not(:disabled):hover {
+  opacity: 0.82;
+  border-color: var(--accent-soft);
+  background: var(--next-bg);
+  color: var(--accent-color);
+}
+
 .quiet_cards .next-button:hover {
   border-color: var(--accent-soft);
   background: var(--next-hover-bg);
   color: var(--accent-color);
 }
 
+.quiet_cards .prev-button:disabled:hover,
 .quiet_cards .next-button:disabled:hover {
   border-color: var(--next-border);
-  background: var(--next-bg);
   color: var(--control-color);
 }
 
+.quiet_cards .prev-button:disabled:hover {
+  background: transparent;
+}
+
+.quiet_cards .next-button:disabled:hover {
+  background: var(--next-bg);
+}
+
+.quiet_cards .prev-button svg,
 .quiet_cards .next-button svg {
   width: 22px;
   height: 22px;

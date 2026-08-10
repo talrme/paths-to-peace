@@ -58,8 +58,8 @@ const PATHS = [
     "duration": "2 min",
     "favorite": true,
     "category": "other",
-    "image": "ocean.avif",
-    "alt": "Ocean water with soft light",
+    "image": "two-emotions-abstract.jpg",
+    "alt": "Blurred red and white flowers moving against a dark background",
     "description": "Identify one emotion that is here right now, then give it a color and some kind of shape or visual form. It does not need to be precise; it might be a soft blur, droplets of white, a red glow from one corner, or any vague image that fits. Find a second emotion and give that one a color and form too. Spend a little time feeling both of them at once, holding both colors, both forms, and both emotions with as much depth and kindness as you can."
   },
   {

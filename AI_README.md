@@ -48,6 +48,7 @@ Current image assets:
 - `meditation.jpg`
 - `rocks.jpg`
 - `waterfalls.jpg`
+- `two-emotions-abstract.jpg` (Pexels photo 8978355 by Ekaterina Glushchenko)
 - `dove.png` source image for site icons
 - `favicon-32.png`, `apple-touch-icon.png`, `icon-192.png`, and `icon-512.png` generated from the dove image
 - `dove-title.png` transparent dove mark used in the `h1` title

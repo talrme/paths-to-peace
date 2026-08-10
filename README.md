@@ -50,6 +50,10 @@ Then open `http://localhost:8080`.
 | `README.md` | Human-facing overview and live-site link |
 | `AI_README.md` | Context for coding assistants and future edits |
 
+## Image Credits
+
+- `images/two-emotions-abstract.jpg` is from [Pexels photo 8978355](https://www.pexels.com/photo/blurred-photo-with-red-and-white-colors-8978355/) by Ekaterina Glushchenko.
+
 ## Icons
 
 The browser tab icon and phone home-screen icons are generated from `images/dove.png`. `index.html` links `images/favicon-32.png` for tabs and `images/apple-touch-icon.png` for iOS, while `site.webmanifest` points Android/PWA installs to the 192px and 512px icon files. `images/dove-title.png` is a transparent title mark used inside the page heading.

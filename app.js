@@ -54,13 +54,13 @@ const PATHS = [
     "description": "Name five things you can notice right now. They can be things you see, feel, hear, or smell. Let each one be simple and specific, just enough to bring you back into the room and into your body."
   },
   {
-    "title": "Shape and Color of Two Feelings",
-    "duration": "4 min",
-    "favorite": false,
+    "title": "Colors and Shapes: Two Emotions at Once",
+    "duration": "2 min",
+    "favorite": true,
     "category": "other",
     "image": "ocean.avif",
     "alt": "Ocean water with soft light",
-    "description": "Think of two feelings that are present right now. For each one, notice if it has a shape and a color. Once both are identified, sit with them for a bit, feeling and seeing both at the same time without needing either one to disappear."
+    "description": "Identify one emotion that is here right now, then give it a color and a shape. Find a second emotion and give that one a color and shape too. Spend a little time feeling both of them at once, holding both colors, both shapes, and both emotions with as much depth and kindness as you can."
   },
   {
     "title": "Get Lost in a Project",

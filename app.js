@@ -72,13 +72,13 @@ const PATHS = [
     "description": "Pick a project with enough texture to absorb you and give it a real pocket of attention. Let momentum build without checking whether it is useful every few minutes. The path is the feeling of getting interested enough to disappear into the work."
   },
   {
-    "title": "Stare at Mary's Face",
+    "title": "Stare at Miri's Face",
     "duration": "2 min",
     "favorite": false,
     "category": "energy",
     "image": "meditation.jpg",
     "alt": "A calm seated meditation figure",
-    "description": "Look at Mary's face and let delight be uncomplicated. Notice the tiny expressions, the softness, the humor, the particular aliveness of someone you love. Let attention become a kind of devotion."
+    "description": "Look at Miri's face and let delight be uncomplicated. Notice the tiny expressions, the softness, the humor, the particular aliveness of someone you love. Let attention become a kind of devotion."
   },
   {
     "title": "Keep the Joke Going",
@@ -88,6 +88,60 @@ const PATHS = [
     "image": "waterfalls.jpg",
     "alt": "A bright waterfall flowing through green rock",
     "description": "Riff on imaginary situations with friends and let the bit keep unfolding. Add details, heighten the premise, pass it back and forth, and follow the laughter as a real source of energy."
+  },
+  {
+    "title": "Fast, Physical, A Little Brave",
+    "duration": "10 min",
+    "favorite": false,
+    "category": "energy",
+    "image": "waterfalls.jpg",
+    "alt": "A bright waterfall flowing through green rock",
+    "description": "Find something physical with a little speed, adventure, or edge to it. It might be riding downhill on a bike, moving fast outside, or doing something that wakes up your body before your brain has time to over-manage it."
+  },
+  {
+    "title": "Creative Competitive Movement",
+    "duration": "10 min",
+    "favorite": false,
+    "category": "energy",
+    "image": "mountains.webp",
+    "alt": "Mountains rising into a soft sky",
+    "description": "Look for the kind of play where your body, creativity, and competition all come online together. A good soccer combination, a clever pickleball point, a quick adjustment, a pass, a cut, a moment where movement turns into invention."
+  },
+  {
+    "title": "The Clean Reset*",
+    "duration": "15 min",
+    "favorite": false,
+    "category": "energy",
+    "image": "rocks.jpg",
+    "alt": "Smooth stones stacked beside water",
+    "description": "Pick something basic that can visibly go from dirty to clean: the car, a counter, a small stretch of the house. Keep it simple and concrete, with no complex organizing required. *Possibly life-giving, possibly just stress management wearing a tiny hat."
+  },
+  {
+    "title": "Sweeping Nature",
+    "duration": "20 min",
+    "favorite": false,
+    "category": "energy",
+    "image": "ocean.avif",
+    "alt": "Ocean water with soft light",
+    "description": "Put yourself near nature that feels beautiful, overwhelming, or a little larger than your normal thoughts. Trees, ocean, stars, mountains, a meteor shower, a view with enough scale to pull attention out of the usual loops."
+  },
+  {
+    "title": "Deep Rest",
+    "duration": "20 min",
+    "favorite": false,
+    "category": "energy",
+    "image": "meditation.jpg",
+    "alt": "A calm seated meditation figure",
+    "description": "Let rest be the actual activity. Go to sleep in a way that feels gentle, wake up without immediately starting the to-do burn-down, and notice the difference between being entertained into numbness and being genuinely restored."
+  },
+  {
+    "title": "Hungry, Present Eating",
+    "duration": "20 min",
+    "favorite": false,
+    "category": "energy",
+    "image": "waterfalls-and-northern-lights.jpeg",
+    "alt": "Waterfalls under northern lights",
+    "description": "Eat something delicious when you are actually hungry. Slow down enough to taste it, preferably with people you love nearby, and let the food be part of the moment instead of background fuel."
   }
 ];
 const STORAGE_KEY = "paths-to-peace-settings-v1";
